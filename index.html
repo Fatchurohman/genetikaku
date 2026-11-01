@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenetikaKu - Aplikasi Genetika Harian</title>
+    <title>GenetikaKu - Aplikasi Genetika Harian Berbasis Ilmiah</title>
     <style>
         :root {
             --bg-main: #0f172a;
@@ -17,6 +17,7 @@
             --accent-amber: #f59e0b;
             --accent-red: #ef4444;
             --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
         }
 
         * {
@@ -30,14 +31,13 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
             border-bottom: 1px solid var(--border-color);
-            padding: 24px 20px;
+            padding: 26px 20px;
             text-align: center;
         }
 
@@ -45,30 +45,32 @@
             font-size: 1.85rem;
             font-weight: 800;
             color: #ffffff;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
         }
 
         header .dev-badge {
             display: inline-block;
-            margin-top: 6px;
+            margin-top: 8px;
             background-color: rgba(16, 185, 129, 0.2);
             border: 1px solid var(--accent-green);
             color: #6ee7b7;
-            padding: 4px 14px;
+            padding: 4px 16px;
             border-radius: 999px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.92rem;
+            font-weight: 700;
         }
 
         header p.subtitle {
-            margin-top: 8px;
+            margin-top: 10px;
             color: var(--text-muted);
             font-size: 0.95rem;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Container & Tabs */
         .container {
-            max-width: 1100px;
+            max-width: 1140px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -84,7 +86,7 @@
 
         .tab-btn {
             flex: 1;
-            min-width: 220px;
+            min-width: 240px;
             background-color: var(--bg-card);
             color: var(--text-muted);
             border: 1px solid var(--border-color);
@@ -109,24 +111,22 @@
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
-        /* Layout Grid */
         .tab-panel {
             display: none;
         }
 
         .tab-panel.active {
             display: grid;
-            grid-template-columns: 1fr 1.4fr;
+            grid-template-columns: 1fr 1.45fr;
             gap: 24px;
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 880px) {
             .tab-panel.active {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Cards & Forms */
         .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -148,15 +148,29 @@
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         label {
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
             margin-bottom: 6px;
             color: #e2e8f0;
+        }
+
+        .label-hint {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
 
         select, input[type="number"] {
@@ -164,9 +178,9 @@
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 11px 14px;
+            padding: 11px 12px;
             border-radius: 10px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             outline: none;
         }
 
@@ -185,7 +199,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .btn-action:hover {
@@ -197,7 +211,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            margin: 16px 0;
+            margin: 14px 0;
         }
 
         .punnett-cell {
@@ -220,18 +234,19 @@
             background-color: rgba(245, 158, 11, 0.15);
         }
 
-        .geno-code {
-            font-family: monospace;
-            font-size: 0.95rem;
+        .cell-title {
+            font-size: 0.82rem;
             font-weight: 700;
+            color: var(--text-main);
             display: block;
         }
 
-        .pheno-tag {
-            font-size: 0.75rem;
+        .cell-sub {
+            font-size: 0.72rem;
             color: var(--text-muted);
+            font-family: monospace;
             display: block;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         /* Info Boxes & Badges */
@@ -252,30 +267,54 @@
             border-left-color: var(--accent-red);
         }
 
+        .info-box.science {
+            border-left-color: var(--accent-purple);
+            background-color: rgba(168, 85, 247, 0.08);
+            font-size: 0.84rem;
+            color: #cbd5e1;
+        }
+
         .stat-list {
             list-style: none;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .stat-list li {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 8px 0;
             border-bottom: 1px dashed var(--border-color);
             font-size: 0.9rem;
+            gap: 10px;
         }
 
         .badge {
-            padding: 2px 10px;
+            padding: 3px 10px;
             border-radius: 99px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
+            white-space: nowrap;
         }
 
         .badge-green { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
         .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
         .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
         .badge-blue { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+        .badge-purple { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+
+        details.science-toggle {
+            margin-top: 16px;
+            cursor: pointer;
+        }
+
+        details.science-toggle summary {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d8b4fe;
+            outline: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -283,579 +322,819 @@
     <header>
         <h1>GenetikaKu : Aplikasi Genetika Kehidupan Sehari-hari</h1>
         <div class="dev-badge">developer : fatur62</div>
-        <p class="subtitle">Panduan Praktis Persilangan Tanaman Hias, Kesehatan Keluarga, dan Seleksi Bibit Ternak Hobi</p>
+        <p class="subtitle">Hitungan Belakang Layar 100% Sesuai Kaidah Biologi — Tampilan Sederhana & Praktis untuk Semua Kalangan</p>
     </header>
 
     <div class="container">
-        <!-- Menu Navigasi Modul -->
         <nav class="nav-tabs" id="navTabs">
             <button class="tab-btn active" data-target="panel-tanaman">1. Persilangan Tanaman Hias</button>
-            <button class="tab-btn" data-target="panel-keluarga">2. Golongan Darah & Nutrisi Keluarga</button>
-            <button class="tab-btn" data-target="panel-ternak">3. Seleksi Bibit Ikan & Burung Hobi</button>
+            <button class="tab-btn" data-target="panel-keluarga">2. Kesehatan & Keturunan Keluarga</button>
+            <button class="tab-btn" data-target="panel-ternak">3. Seleksi Indukan Ikan & Burung Hobi</button>
         </nav>
 
-        <!-- MODUL 1: TANAMAN HIAS -->
+        <!-- MODUL 1: TANAMAN HIAS (MENDEL + EPISTASIS + KLOROPLAS MATERNAL) -->
         <section id="panel-tanaman" class="tab-panel active">
             <div class="card">
-                <h2 class="card-title">Pengaturan Indukan Tanaman</h2>
-                <p class="card-desc">Silangkan dua indukan tanaman untuk melihat peluang warna daun/bunga pada anakan beserta cara perawatannya.</p>
+                <h2 class="card-title">Pilih Pasangan Indukan Tanaman</h2>
+                <p class="card-desc">Pada tanaman, <strong>Induk Betina (penerima serbuk sari)</strong> mewariskan sifat corak dasar daun (kloroplas), sedangkan warna bunga/daun diatur bersama dengan Induk Jantan.</p>
 
                 <div class="form-group">
-                    <label for="plantType">Pilih Jenis Tanaman Pekarangan:</label>
+                    <label for="plantType">Jenis Tanaman Pekarangan:</label>
                     <select id="plantType"></select>
                 </div>
 
                 <div class="form-group">
-                    <label for="parent1Gen">Sifat Indukan Pertama (Serbuk Sari):</label>
-                    <select id="parent1Gen"></select>
+                    <label for="maternalChloroplast">Kondisi Daun Induk Betina (Pohon yang Dibuahi / Putik):</label>
+                    <span class="label-hint">Penting: Corak belang putih/kuning (Variegata) pada daun sebagian besar diwariskan langsung dari kantung sel induk betina.</span>
+                    <select id="maternalChloroplast"></select>
                 </div>
 
                 <div class="form-group">
-                    <label for="parent2Gen">Sifat Indukan Kedua (Putik):</label>
-                    <select id="parent2Gen"></select>
+                    <label for="femaleNuclearGen">Sifat Warna Induk Betina (Putik):</label>
+                    <select id="femaleNuclearGen"></select>
                 </div>
 
-                <button class="btn-action" id="btnCrossPlant">Hitung Hasil Persilangan</button>
+                <div class="form-group">
+                    <label for="maleNuclearGen">Sifat Warna Induk Jantan (Pemberi Serbuk Sari):</label>
+                    <select id="maleNuclearGen"></select>
+                </div>
+
+                <button class="btn-action" id="btnCrossPlant">Hitung Hasil Anakan Tanaman</button>
             </div>
 
             <div class="card">
-                <h2 class="card-title">Peta Kemungkinan Anakan (16 Kombinasi)</h2>
-                <p class="card-desc">Klik pada salah satu kotak di bawah untuk melihat panduan merawat anakan tersebut:</p>
+                <h2 class="card-title">Gambaran Anakan yang Akan Tumbuh (16 Kemungkinan)</h2>
+                <p class="card-desc">Klik salah satu kotak di bawah untuk membaca cara merawat bibit tersebut agar tumbuh subur:</p>
                 
                 <div id="punnettContainer" class="punnett-grid"></div>
                 <div id="plantSummaryBox"></div>
                 <div id="plantCareBox" class="info-box"></div>
+
+                <details class="science-toggle">
+                    <summary>Lihat Dasar Ilmiah Perhitungan Ini (Catatan Biologi)</summary>
+                    <div id="plantScienceBox" class="info-box science"></div>
+                </details>
             </div>
         </section>
 
-        <!-- MODUL 2: KELUARGA & NUTRISI -->
+        <!-- MODUL 2: KELUARGA (ABO + RHESUS + GEN LCT + GEN CYP1A2) -->
         <section id="panel-keluarga" class="tab-panel">
             <div class="card">
-                <h2 class="card-title">Data Orang Tua / Kakek-Nenek</h2>
-                <p class="card-desc">Prediksi golongan darah anak/cucu serta kecocokan pola makan harian berdasarkan sifat bawaan keluarga.</p>
+                <h2 class="card-title">Data Sifat Orang Tua</h2>
+                <p class="card-desc">Masukkan golongan darah dan kebiasaan pencernaan Ayah & Ibu untuk melihat peluang pada anak/cucu.</p>
 
-                <div class="form-group">
-                    <label for="bloodFather">Golongan Darah Ayah:</label>
-                    <select id="bloodFather"></select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloodFather">Golongan Darah Ayah:</label>
+                        <select id="bloodFather"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rhesusFather">Rhesus Darah Ayah:</label>
+                        <select id="rhesusFather"></select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloodMother">Golongan Darah Ibu:</label>
+                        <select id="bloodMother"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rhesusMother">Rhesus Darah Ibu:</label>
+                        <select id="rhesusMother"></select>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="bloodMother">Golongan Darah Ibu:</label>
-                    <select id="bloodMother"></select>
+                    <label for="lactoseParents">Kondisi Pencernaan Ayah & Ibu Saat Minum Susu Sapi:</label>
+                    <select id="lactoseParents"></select>
                 </div>
 
                 <div class="form-group">
-                    <label for="lactoseTrait">Reaksi Keluarga Terhadap Susu Sapi (Laktosa):</label>
-                    <select id="lactoseTrait"></select>
+                    <label for="caffeineParents">Kepekaan Tubuh Ayah & Ibu Terhadap Kopi / Teh:</label>
+                    <select id="caffeineParents"></select>
                 </div>
 
-                <div class="form-group">
-                    <label for="caffeineTrait">Sensitivitas Tubuh Terhadap Kopi / Teh:</label>
-                    <select id="caffeineTrait"></select>
-                </div>
-
-                <button class="btn-action" id="btnAnalyzeFamily">Tampilkan Analisis Keluarga</button>
+                <button class="btn-action" id="btnAnalyzeFamily">Hitung Peluang Keturunan & Panduan Sehat</button>
             </div>
 
             <div class="card">
-                <h2 class="card-title">Hasil Prediksi & Panduan Menu Harian</h2>
-                <p class="card-desc">Penjelasan ringan mengenai peluang sifat keturunan dan saran asupan makanan sehari-hari.</p>
+                <h2 class="card-title">Hasil Prediksi Keluarga & Panduan Harian</h2>
+                <p class="card-desc">Disajikan dengan bahasa praktis untuk panduan kesehatan keluarga di rumah.</p>
                 <div id="familyResultContainer"></div>
+
+                <details class="science-toggle">
+                    <summary>Lihat Dasar Ilmiah Perhitungan Ini (Catatan Biologi)</summary>
+                    <div id="familyScienceBox" class="info-box science"></div>
+                </details>
             </div>
         </section>
 
-        <!-- MODUL 3: SELEKSI BIBIT TERNAK / IKAN HOBI -->
+        <!-- MODUL 3: SELEKSI BIBIT TERNAK HOBI (PERSAMAAN PEMULIAAN + DEPRESI INBREEDING) -->
         <section id="panel-ternak" class="tab-panel">
             <div class="card">
-                <h2 class="card-title">Kalkulator Pasangan Indukan Hobi</h2>
-                <p class="card-desc">Cegah anakan kerdil atau cacat akibat kawin sedarah (Inbreeding) pada ikan hias, burung berkicau, atau ayam hias.</p>
+                <h2 class="card-title">Pemeriksa Pasangan Indukan Ikan / Burung / Ayam Hias</h2>
+                <p class="card-desc">Pastikan pasangan indukan pilihan Bapak tidak menghasilkan anakan yang lemah atau cacat akibat hubungan darah terlalu dekat.</p>
 
                 <div class="form-group">
-                    <label for="kinshipRelation">Hubungan Kekerabatan Calon Indukan:</label>
+                    <label for="kinshipRelation">Asal-Usul / Hubungan Kekerabatan Kedua Indukan:</label>
                     <select id="kinshipRelation"></select>
                 </div>
 
                 <div class="form-group">
-                    <label for="heritabilityTrait">Sifat Unggulan yang Ingin Diturunkan:</label>
+                    <label for="heritabilityTrait">Keunggulan Utama yang Ingin Bapak Cetak pada Anakan:</label>
                     <select id="heritabilityTrait"></select>
                 </div>
 
-                <div class="form-group">
-                    <label for="avgPopulation">Nilai Rata-Rata Kolam / Kandang Saat Ini (Skor 1 - 100):</label>
-                    <input type="number" id="avgPopulation" value="70" min="10" max="100">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="avgPopulation">Nilai Rata-Rata Ternak Sekitar (1-100):</label>
+                        <input type="number" id="avgPopulation" value="70" min="10" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="selectedParents">Nilai Pasangan Indukan Bapak (1-100):</label>
+                        <input type="number" id="selectedParents" value="88" min="10" max="100">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="selectedParents">Nilai Rata-Rata Indukan Pilihan Bapak (Skor 1 - 100):</label>
-                    <input type="number" id="selectedParents" value="88" min="10" max="100">
-                </div>
-
-                <button class="btn-action" id="btnCalcBreeding">Evaluasi Kualitas Anakan</button>
+                <button class="btn-action" id="btnCalcBreeding">Periksa Kualitas Anakan</button>
             </div>
 
             <div class="card">
-                <h2 class="card-title">Rekomendasi & Prediksi Anakan</h2>
-                <p class="card-desc">Analisis keamanan silsilah indukan dan perkiraan peningkatan mutu anakan generasi berikutnya.</p>
+                <h2 class="card-title">Hasil Evaluasi & Saran Penjodohan Indukan</h2>
+                <p class="card-desc">Ringkasan mutu anakan yang akan lahir beserta langkah pencegahan risiko kawin sedarah.</p>
                 <div id="breedingResultContainer"></div>
+
+                <details class="science-toggle">
+                    <summary>Lihat Dasar Ilmiah Perhitungan Ini (Catatan Biologi)</summary>
+                    <div id="breedingScienceBox" class="info-box science"></div>
+                </details>
             </div>
         </section>
     </div>
 
     <script>
-        // 1. DATA JSON INTERNAL (Dikelola dengan aman)
-        const RAW_DATABASE_JSON = `{
+        // 1. BASIS DATA JSON DENGAN PARAMETER BIOLOGI SESUNGGUHNYA
+        const RAW_SCIENTIFIC_DB = `{
             "plants": {
                 "aglaonema": {
                     "name": "Aglaonema (Sri Rezeki)",
-                    "genotypes": [
-                        { "code": "MMBB", "label": "Merah Pekat Mengkilap (MMBB)" },
-                        { "code": "MmBb", "label": "Kombinasi Merah-Hijau / Variegata (MmBb)" },
-                        { "code": "mmBB", "label": "Hijau Klasik Tahan Banting (mmBB)" },
-                        { "code": "Mmbb", "label": "Merah Pucat / Klorofil Rendah (Mmbb)" }
+                    "nuclearGenotypes": [
+                        { "code": "MMBB", "commonLabel": "Merah Menyala Murni (Batang Kokoh)" },
+                        { "code": "MmBb", "commonLabel": "Semburat Merah-Hijau (Turunan Campuran)" },
+                        { "code": "mmBB", "commonLabel": "Hijau Segar Klasik (Tahan Cuaca)" },
+                        { "code": "Mmbb", "commonLabel": "Merah Muda Pucat (Daun Tipis)" }
                     ]
                 },
                 "anggrek": {
                     "name": "Anggrek Bulan (Phalaenopsis)",
-                    "genotypes": [
-                        { "code": "MMBB", "label": "Ungu Pekat Kelopak Lebar (MMBB)" },
-                        { "code": "MmBb", "label": "Corak Bintik / Belang Harlequin (MmBb)" },
-                        { "code": "mmBB", "label": "Putih Bersih Kelopak Lebar (mmBB)" },
-                        { "code": "mmbb", "label": "Putih Mini Bibir Kuning (mmbb)" }
+                    "nuclearGenotypes": [
+                        { "code": "MMBB", "commonLabel": "Ungu Pekat Kelopak Tebal" },
+                        { "code": "MmBb", "commonLabel": "Ungu Muda Semburat Putih" },
+                        { "code": "mmBB", "commonLabel": "Putih Bersih Kelopak Tebal" },
+                        { "code": "mmbb", "commonLabel": "Putih Kecil Bibir Pucat" }
                     ]
                 },
                 "adenium": {
                     "name": "Adenium (Kamboja Jepang)",
-                    "genotypes": [
-                        { "code": "MMBB", "label": "Merah Tumpuk Bonggol Besar (MMBB)" },
-                        { "code": "MmBb", "label": "Merah Muda Garis Tepi Putih (MmBb)" },
-                        { "code": "mmBB", "label": "Putih Tumpuk Bonggol Besar (mmBB)" },
-                        { "code": "Mmbb", "label": "Merah Muda Cabang Ramping (Mmbb)" }
+                    "nuclearGenotypes": [
+                        { "code": "MMBB", "commonLabel": "Merah Tua Mahkota Tumpuk" },
+                        { "code": "MmBb", "commonLabel": "Merah Muda Garis Tepi" },
+                        { "code": "mmBB", "commonLabel": "Putih Bersih Bonggol Besar" },
+                        { "code": "Mmbb", "commonLabel": "Merah Muda Pucat Cabang Kecil" }
                     ]
                 }
             },
-            "bloodTypes": [
-                { "id": "A_hetero", "label": "Golongan A (Umum / IA i)", "alleles": ["IA", "i"] },
-                { "id": "A_homo", "label": "Golongan A Murni (IA IA)", "alleles": ["IA", "IA"] },
-                { "id": "B_hetero", "label": "Golongan B (Umum / IB i)", "alleles": ["IB", "i"] },
-                { "id": "B_homo", "label": "Golongan B Murni (IB IB)", "alleles": ["IB", "IB"] },
-                { "id": "AB", "label": "Golongan AB (IA IB)", "alleles": ["IA", "IB"] },
-                { "id": "O", "label": "Golongan O (i i)", "alleles": ["i", "i"] }
+            "chloroplastTypes": [
+                { "id": "normal_green", "label": "Daun Hijau / Berwarna Normal Merata (Plastida Normal)" },
+                { "id": "variegated_chimera", "label": "Daun Belang Putih/Kuning Cantik (Induk Betina Variegata)" },
+                { "id": "albino_plastid", "label": "Daun Putih Pucat Seluruhnya (Minim Zat Hijau Daun)" }
             ],
-            "lactoseOptions": [
-                { "id": "normal", "label": "Aman Minum Susu (Pencernaan Nyaman)", "advice": "Tubuh masih memproduksi enzim pengurai gula susu dengan baik. Susu sapi segar, keju, dan yogurt aman dikonsumsi harian untuk menjaga kepadatan tulang." },
-                { "id": "sensitive", "label": "Mudah Kembung / Mulas Setelah Minum Susu Sapi", "advice": "Produksi enzim laktase alami mulai berkurang seiring usia. Ganti susu biasa dengan Susu Rendah Laktosa, Susu Kedelai, Tempe, atau Yogurt (karena bakteri baik pada yogurt sudah membantu mengurai laktosa)." }
+            "aboTypes": [
+                { "id": "A_het", "label": "Golongan A (Umum di Masyarakat)", "alleles": ["IA", "i"] },
+                { "id": "A_hom", "label": "Golongan A Murni (Ayah-Ibu Keduanya A)", "alleles": ["IA", "IA"] },
+                { "id": "B_het", "label": "Golongan B (Umum di Masyarakat)", "alleles": ["IB", "i"] },
+                { "id": "B_hom", "label": "Golongan B Murni (Ayah-Ibu Keduanya B)", "alleles": ["IB", "IB"] },
+                { "id": "AB", "label": "Golongan AB", "alleles": ["IA", "IB"] },
+                { "id": "O", "label": "Golongan O", "alleles": ["i", "i"] }
             ],
-            "caffeineOptions": [
-                { "id": "fast", "label": "Cepat Netral (Minum Kopi Sore Tetap Bisa Tidur Nyenyak)", "advice": "Enzim hati mengurai kafein dengan cepat. Kopi atau teh hangat 1-2 cangkir sehari aman bagi jantung, namun tetap batasi gula pasir." },
-                { "id": "slow", "label": "Sensitif (Jantung Berdebar / Sulit Tidur Jika Minum Kopi)", "advice": "Kafein bertahan lebih lama di pembuluh darah. Sebaiknya nikmati kopi/teh hanya di pagi hari sebelum pukul 11.00 WIB, atau beralih ke seduhan jahe merah, serai, dan teh bunga telang." }
+            "rhesusTypes": [
+                { "id": "pos_het", "label": "Rhesus Positif (+) [Pembawa Sifat -]", "alleles": ["D", "d"] },
+                { "id": "pos_hom", "label": "Rhesus Positif (+) Murni [Mayoritas Orang Indonesia]", "alleles": ["D", "D"] },
+                { "id": "neg", "label": "Rhesus Negatif (-)", "alleles": ["d", "d"] }
             ],
-            "kinshipList": [
-                { "id": "unrelated", "label": "Beda Indukan / Beli dari Peternak Berbeda (Tidak Sedarah)", "fValue": 0.0, "status": "Sangat Aman" },
-                { "id": "cousin", "label": "Sepupu (Kakek/Neneknya Sama)", "fValue": 0.0625, "status": "Masih Aman Terkendali" },
-                { "id": "half_sibling", "label": "Saudara Tiri (Satu Induk Jantan Saja / Betina Saja)", "fValue": 0.125, "status": "Waspada (Batas Maksimal)" },
-                { "id": "full_sibling", "label": "Saudara Kandung Satu Tetasan / Induk ke Anak", "fValue": 0.25, "status": "Berisiko Tinggi Cacat / Kerdil" }
+            "lactoseCrosses": [
+                {
+                    "id": "tt_x_tt",
+                    "label": "Ayah & Ibu Keduanya Mudah Kembung/Mulas Jika Minum Susu Sapi",
+                    "p1": ["t", "t"], "p2": ["t", "t"]
+                },
+                {
+                    "id": "Tt_x_tt",
+                    "label": "Salah Satu Nyaman Minum Susu, Satu Lagi Mudah Mulas",
+                    "p1": ["T", "t"], "p2": ["t", "t"]
+                },
+                {
+                    "id": "Tt_x_Tt",
+                    "label": "Ayah & Ibu Nyaman Minum Susu (Tetapi Kakek/Nenek Ada yang Mulas)",
+                    "p1": ["T", "t"], "p2": ["T", "t"]
+                },
+                {
+                    "id": "TT_x_TT",
+                    "label": "Keluarga Besar Ayah & Ibu Semuanya Kuat Minum Susu Segar",
+                    "p1": ["T", "T"], "p2": ["T", "T"]
+                }
             ],
-            "heritabilityTraits": [
-                { "id": "color", "label": "Warna Sisik Ikan / Bulu Burung (Daya Turun Tinggi: 60%)", "h2": 0.60 },
-                { "id": "body_shape", "label": "Postur Tubuh & Ukuran Ekor (Daya Turun Sedang: 45%)", "h2": 0.45 },
-                { "id": "voice_stamina", "label": "Kualitas Suara Kicauan & Mental (Daya Turun: 30% + Latihan)", "h2": 0.30 },
-                { "id": "egg_fertility", "label": "Jumlah Telur & Daya Tahan Penyakit (Daya Turun Rendah: 20%)", "h2": 0.20 }
+            "caffeineCrosses": [
+                {
+                    "id": "FF_x_FF",
+                    "label": "Ayah & Ibu Tahan Minum Kopi Sore (Tidur Tetap Nyenyak)",
+                    "p1": ["F", "F"], "p2": ["F", "F"]
+                },
+                {
+                    "id": "Ff_x_Ff",
+                    "label": "Ayah & Ibu Cukup Tahan Kopi, Kadang Sedikit Berdebar Jika Kental",
+                    "p1": ["F", "f"], "p2": ["F", "f"]
+                },
+                {
+                    "id": "ff_x_ff",
+                    "label": "Ayah & Ibu Mudah Berdebar / Sulit Tidur Setelah Minum Kopi",
+                    "p1": ["f", "f"], "p2": ["f", "f"]
+                }
+            ],
+            "kinshipRelations": [
+                { "id": "outcross", "label": "Beda Asal Indukan / Beli dari Peternak Lain (Tidak Sedarah)", "fCoeff": 0.0, "riskName": "Bebas Kawin Sedarah" },
+                { "id": "first_cousin", "label": "Sepupu Pertama (Kakek & Neneknya Sama)", "fCoeff": 0.0625, "riskName": "Risiko Rendah" },
+                { "id": "half_sib", "label": "Saudara Tiri (Satu Bapak Beda Ibu / Satu Ibu Beda Bapak)", "fCoeff": 0.125, "riskName": "Risiko Sedang (Line-Breeding)" },
+                { "id": "full_sib", "label": "Saudara Kandung Satu Tetasan / Induk Kawin dengan Anaknya", "fCoeff": 0.25, "riskName": "Risiko Tinggi (Inbreeding Kuat)" }
+            ],
+            "breedingTraits": [
+                {
+                    "id": "color_pattern",
+                    "label": "Keindahan Warna Sisik Ikan / Corak Bulu Burung",
+                    "h2": 0.60,
+                    "depressionSlope": 12.0,
+                    "note": "Sifat warna sangat kuat diturunkan dari indukan ke anak (Heritabilitas tinggi) dan tidak terlalu terpengaruh oleh kawin sedarah."
+                },
+                {
+                    "id": "body_conformation",
+                    "label": "Ukuran Postur Tubuh, Bonggol & Lebar Ekor",
+                    "h2": 0.45,
+                    "depressionSlope": 28.0,
+                    "note": "Postur tubuh cukup mudah diturunkan, namun kawin sedarah bisa membuat ukuran tubuh anakan menyusut/kerdil."
+                },
+                {
+                    "id": "song_stamina",
+                    "label": "Kualitas Suara Kicauan, Durasi & Mental Tempur",
+                    "h2": 0.30,
+                    "depressionSlope": 36.0,
+                    "note": "Selain faktor genetik indukan (30%), latihan pemasteran dan pakan menyumbang 70% keberhasilan suara."
+                },
+                {
+                    "id": "fertility_survival",
+                    "label": "Jumlah Telur Menetas & Ketahanan Terhadap Penyakit",
+                    "h2": 0.15,
+                    "depressionSlope": 55.0,
+                    "note": "Daya tetas dan kekebalan tubuh sangat sensitif terhadap kawin sedarah (Inbreeding Depression paling berat)."
+                }
             ]
         }`;
 
-        // 2. FUNGSI PARSING JSON AMAN DENGAN VALIDASI NULL/UNDEFINED
-        function parseDatabaseSafely(rawJson) {
+        // 2. FUNGSI PARSING JSON AMAN (VALIDASI NULL/UNDEFINED & TRY-CATCH)
+        function loadScientificDB(jsonString) {
             try {
-                if (!rawJson || typeof rawJson !== "string") {
-                    throw new Error("Sumber data JSON kosong atau tidak valid.");
+                if (!jsonString || typeof jsonString !== "string") {
+                    throw new Error("String database kosong.");
                 }
-                const parsed = JSON.parse(rawJson);
-                if (!parsed || typeof parsed !== "object") {
-                    throw new Error("Format objek JSON rusak.");
+                const data = JSON.parse(jsonString);
+                if (!data || typeof data !== "object") {
+                    throw new Error("Struktur database tidak valid.");
                 }
-                return parsed;
-            } catch (error) {
-                console.error("Kesalahan Parsing Data:", error.message);
+                return data;
+            } catch (err) {
+                console.error("Gagal memuat basis data ilmiah:", err.message);
                 return {
-                    plants: {},
-                    bloodTypes: [],
-                    lactoseOptions: [],
-                    caffeineOptions: [],
-                    kinshipList: [],
-                    heritabilityTraits: []
+                    plants: {}, chloroplastTypes: [], aboTypes: [], rhesusTypes: [],
+                    lactoseCrosses: [], caffeineCrosses: [], kinshipRelations: [], breedingTraits: []
                 };
             }
         }
 
-        const appDB = parseDatabaseSafely(RAW_DATABASE_JSON);
+        const db = loadScientificDB(RAW_SCIENTIFIC_DB);
 
-        // 3. LOGIKA GENETIKA TANAMAN (MODUL 1)
-        function extractGametes(genotypeStr) {
-            if (!genotypeStr || typeof genotypeStr !== "string" || genotypeStr.length !== 4) {
+        // =========================================================================
+        // 3. MODUL 1: GENETIKA TANAMAN (INTI MENDEL + EPISTASIS + SITOPLASMIK MATERNAL)
+        // =========================================================================
+        function getNuclearGametes(genoCode) {
+            if (!genoCode || typeof genoCode !== "string" || genoCode.length !== 4) {
                 return ["MB", "Mb", "mB", "mb"];
             }
-            const mAlleles = [genotypeStr[0], genotypeStr[1]];
-            const bAlleles = [genotypeStr[2], genotypeStr[3]];
-            const gametes = [];
-            for (const m of mAlleles) {
-                for (const b of bAlleles) {
-                    gametes.push(`${m}${b}`);
+            const mSet = [genoCode[0], genoCode[1]];
+            const bSet = [genoCode[2], genoCode[3]];
+            const result = [];
+            for (const m of mSet) {
+                for (const b of bSet) {
+                    result.push(`${m}${b}`);
                 }
             }
-            return gametes;
+            return result;
         }
 
-        function combineGametes(g1, g2) {
-            const mPair = [g1[0], g2[0]].sort().join("");
-            const bPair = [g1[1], g2[1]].sort().join("");
+        function mergeNuclearGametes(gFemale, gMale) {
+            const mPair = [gFemale[0], gMale[0]].sort().join("");
+            const bPair = [gFemale[1], gMale[1]].sort().join("");
             return `${mPair}${bPair}`;
         }
 
-        function evaluatePlantPhenotype(genotype) {
-            const hasDominantM = genotype.includes("M");
-            const isHomozygousM = genotype.startsWith("MM");
-            const isRecessiveB = genotype.endsWith("bb");
+        function evaluatePlantBiology(nuclearGeno, maternalPlastidId) {
+            const isHomoM = nuclearGeno.startsWith("MM");
+            const isHeteroM = nuclearGeno.startsWith("Mm");
+            const isRecessiveEpistasisB = nuclearGeno.endsWith("bb");
 
-            // Aturan Epistasis Resesif (bb = Klorofil/Vitalitas lemah)
-            if (isRecessiveB) {
+            // 1. Cek Letal/Sub-letal Plastida Albino Maternal atau Epistasis Resesif bb
+            if (maternalPlastidId === "albino_plastid" || isRecessiveEpistasisB) {
+                const causeText = maternalPlastidId === "albino_plastid"
+                    ? "mewarisi kantung sel (kloroplas) tanpa zat hijau daun dari Induk Betina"
+                    : "terkena efek gen penutup (epistasis resesif bb) yang menghambat pembentukan zat hijau daun";
+
                 return {
-                    name: "Pucat / Albino (Rawan Layu)",
-                    badgeClass: "badge-red",
-                    care: "Anakan ini membawa sifat resesif ganda (bb) sehingga zat hijau daunnya (klorofil) sangat sedikit. Letakkan di tempat teduh (bawah atap/paranet 80%), jangan terkena matahari langsung, dan gunakan media tanam yang sangat poros agar akar tidak busuk."
+                    shortTitle: "Bibit Pucat / Albino",
+                    commonCategory: "Bibit Pucat / Minim Zat Hijau Daun (Rawan Layu)",
+                    badge: "badge-red",
+                    careAdvice: `Anakan ini ${causeText}. Karena sulit memasak makanan sendiri (fotosintesis lemah), letakkan di tempat sangat teduh (bawah atap/paranet 80%), jaga kelembapan, atau sambung pucuk (grafting) ke batang bawah yang hijau sehat agar tetap hidup.`,
+                    scienceNote: `Genotipe Inti: ${nuclearGeno} | Sitoplasma Betina: ${maternalPlastidId}. Terjadi penghambatan biosintesis klorofil baik oleh alel epistatik homozigot resesif (bb) maupun mutasi plastida maternal.`
                 };
             }
 
-            // Kodominansi / Heterozigot (Mm = Corak Kombinasi / Variegata)
-            if (hasDominantM && !isHomozygousM) {
+            // 2. Jika Induk Betina Variegata (Pewarisan Sitoplasmik Maternal)
+            if (maternalPlastidId === "variegated_chimera") {
+                if (isHomoM) {
+                    return {
+                        shortTitle: "Tricolor / Merah Belang",
+                        commonCategory: "Unggulan: Merah Pekat Belang Putih/Kuning (Tricolor)",
+                        badge: "badge-amber",
+                        careAdvice: "Anakan istimewa bernilai tinggi! Perpaduan warna merah pekat dari gen inti (MM) dan corak belang putih dari daun Induk Betina. Jemur matahari pagi pukul 07.00-09.00 dan gunakan pupuk rendah Nitrogen agar belangnya tidak pudar.",
+                        scienceNote: `Genotipe Inti: ${nuclearGeno} (Dominan antosianin MM) + Sitoplasma Maternal Heteroplasmik (Variegata). Menghasilkan ekspresi fenotipe kombinasi pigmen antosianin vakuola dan sektor jaringan bebas klorofil.`
+                    };
+                }
+                if (isHeteroM) {
+                    return {
+                        shortTitle: "Variegata Semburat",
+                        commonCategory: "Cantik: Daun Belang Semburat Merah Muda",
+                        badge: "badge-amber",
+                        careAdvice: "Memiliki corak belang indah warisan Induk Betina dengan semburat warna lembut. Gunakan media tanam poros (sekam bakar + pakis + sedikit kompos) dan hindari panas terik siang hari agar bagian daun yang putih tidak gosong.",
+                        scienceNote: `Genotipe Inti: ${nuclearGeno} (Kodominan/Inkomplit Mm) + Plastida Maternal Variegata.`
+                    };
+                }
                 return {
-                    name: "Corak Kombinasi / Variegata",
-                    badgeClass: "badge-amber",
-                    care: "Anakan unggulan dengan perpaduan warna yang cantik! Agar corak warnanya keluar tegas dan tidak kembali menghijau, berikan sinar matahari pagi (pukul 07.00 - 09.00) dan gunakan pupuk rendah Nitrogen (misalnya NPK seimbang atau pupuk khusus bunga/warna)."
+                    shortTitle: "Hijau Belang Putih",
+                    commonCategory: "Variegata Klasik: Daun Hijau Belang Putih",
+                    badge: "badge-green",
+                    careAdvice: "Meskipun tidak membawa warna merah/ungu, tanaman ini mewarisi corak belang putih yang segar dari Induk Betina. Sangat cocok untuk penghias teras yang teduh namun terang.",
+                    scienceNote: `Genotipe Inti: ${nuclearGeno} (Tanpa antosianin mm) + Plastida Maternal Variegata.`
                 };
             }
 
-            // Dominan Penuh (MM = Warna Pekat)
-            if (isHomozygousM) {
+            // 3. Plastida Normal Hijau (Murni Diatur Gen Inti Mendelian)
+            if (isHomoM) {
                 return {
-                    name: "Warna Merah/Ungu Pekat Unggulan",
-                    badgeClass: "badge-green",
-                    care: "Tanaman ini mewarisi gen warna pekat yang kuat dan vigor batang yang kokoh. Sangat bagus dijadikan indukan utama. Siram 2-3 hari sekali saat media mulai kering dan berikan pupuk lambat urai (Dekastar) setiap 3 bulan."
+                    shortTitle: "Merah/Ungu Pekat",
+                    commonCategory: "Unggulan: Warna Merah/Ungu Pekat Merata",
+                    badge: "badge-green",
+                    careAdvice: "Bibit ini tumbuh sangat gagah dengan warna merah/ungu pekat dan daun hijau sehat. Sangat kuat dijadikan indukan masa depan. Berikan pupuk seimbang secara rutin.",
+                    scienceNote: `Genotipe Inti: ${nuclearGeno} + Plastida Normal. Ekspresi antosianin homozigot dominan (MM) dengan pembentukan klorofil normal (B_).`
                 };
             }
 
-            // Resesif murni dengan B normal (mmBB / mmBb)
+            if (isHeteroM) {
+                return {
+                    shortTitle: "Kombinasi / Semburat",
+                    commonCategory: "Menarik: Warna Kombinasi Merah-Hijau (Tengah/Tepi)",
+                    badge: "badge-blue",
+                    careAdvice: "Bibit ini menampilkan dua perpaduan warna pada tulang daun dan helai daunnya. Berikan cahaya pagi yang cukup agar warna cerahnya semakin keluar.",
+                    scienceNote: `Genotipe Inti: ${nuclearGeno} + Plastida Normal. Menunjukkan dominansi tidak sempurna / kodominansi pada lokus pigmen M.`
+                };
+            }
+
             return {
-                name: "Hijau / Putih Alami (Tahan Cuaca)",
-                badgeClass: "badge-blue",
-                care: "Anakan ini sangat sehat, berdaun rimbun, dan paling tahan terhadap perubahan cuaca. Cocok ditanam di teras rumah dan sangat mudah diperbanyak melalui cacah batang atau pemisahan anakan."
+                shortTitle: "Hijau/Putih Sehat",
+                commonCategory: "Tahan Banting: Daun Hijau / Bunga Putih Bersih",
+                badge: "badge-blue",
+                careAdvice: "Bibit paling subur, cepat beranak-pinak, dan tahan terhadap cuaca ekstrem karena zat hijau daunnya bekerja maksimal.",
+                scienceNote: `Genotipe Inti: ${nuclearGeno} (Resesif pigmen antosianin mm, klorofil normal B_).`
             };
         }
 
-        function populatePlantSelectors() {
-            const plantSelect = document.getElementById("plantType");
-            const p1Select = document.getElementById("parent1Gen");
-            const p2Select = document.getElementById("parent2Gen");
+        function initPlantModule() {
+            const plantSel = document.getElementById("plantType");
+            const plastidSel = document.getElementById("maternalChloroplast");
+            const femSel = document.getElementById("femaleNuclearGen");
+            const maleSel = document.getElementById("maleNuclearGen");
 
-            if (!plantSelect || !appDB.plants) return;
+            if (!plantSel || !plastidSel || !femSel || !maleSel) return;
 
-            plantSelect.innerHTML = "";
-            Object.keys(appDB.plants).forEach((key) => {
+            plantSel.innerHTML = "";
+            Object.keys(db.plants).forEach((k) => {
                 const opt = document.createElement("option");
-                opt.value = key;
-                opt.textContent = appDB.plants[key]?.name ?? key;
-                plantSelect.appendChild(opt);
+                opt.value = k;
+                opt.textContent = db.plants[k]?.name ?? k;
+                plantSel.appendChild(opt);
             });
 
-            const updateParentOptions = () => {
-                const selectedPlantKey = plantSelect.value;
-                const plantData = appDB.plants[selectedPlantKey];
-                const genotypes = Array.isArray(plantData?.genotypes) ? plantData.genotypes : [];
+            plastidSel.innerHTML = "";
+            db.chloroplastTypes.forEach((c) => {
+                const opt = document.createElement("option");
+                opt.value = c.id;
+                opt.textContent = c.label;
+                plastidSel.appendChild(opt);
+            });
 
-                p1Select.innerHTML = "";
-                p2Select.innerHTML = "";
+            const syncNuclearOptions = () => {
+                const pKey = plantSel.value;
+                const list = db.plants[pKey]?.nuclearGenotypes ?? [];
+                femSel.innerHTML = "";
+                maleSel.innerHTML = "";
 
-                genotypes.forEach((item, idx) => {
-                    const opt1 = document.createElement("option");
-                    opt1.value = item.code;
-                    opt1.textContent = item.label;
-                    p1Select.appendChild(opt1);
+                list.forEach((g, idx) => {
+                    const o1 = document.createElement("option");
+                    o1.value = g.code;
+                    o1.textContent = g.commonLabel;
+                    if (idx === 1) o1.selected = true;
+                    femSel.appendChild(o1);
 
-                    const opt2 = document.createElement("option");
-                    opt2.value = item.code;
-                    opt2.textContent = item.label;
-                    if (idx === 1) opt2.selected = true;
-                    p2Select.appendChild(opt2);
+                    const o2 = document.createElement("option");
+                    o2.value = g.code;
+                    o2.textContent = g.commonLabel;
+                    if (idx === 1) o2.selected = true;
+                    maleSel.appendChild(o2);
                 });
 
-                renderPlantCross();
+                calculatePlantCross();
             };
 
-            plantSelect.addEventListener("change", updateParentOptions);
-            updateParentOptions();
+            plantSel.addEventListener("change", syncNuclearOptions);
+            syncNuclearOptions();
         }
 
-        function renderPlantCross() {
-            const p1Code = document.getElementById("parent1Gen")?.value ?? "MmBb";
-            const p2Code = document.getElementById("parent2Gen")?.value ?? "MmBb";
-            const punnettContainer = document.getElementById("punnettContainer");
-            const summaryBox = document.getElementById("plantSummaryBox");
-            const careBox = document.getElementById("plantCareBox");
+        function calculatePlantCross() {
+            const plastidId = document.getElementById("maternalChloroplast")?.value ?? "normal_green";
+            const femCode = document.getElementById("femaleNuclearGen")?.value ?? "MmBb";
+            const maleCode = document.getElementById("maleNuclearGen")?.value ?? "MmBb";
 
-            if (!punnettContainer || !summaryBox || !careBox) return;
+            const gridEl = document.getElementById("punnettContainer");
+            const sumEl = document.getElementById("plantSummaryBox");
+            const careEl = document.getElementById("plantCareBox");
+            const sciEl = document.getElementById("plantScienceBox");
 
-            const gametes1 = extractGametes(p1Code);
-            const gametes2 = extractGametes(p2Code);
+            if (!gridEl || !sumEl || !careEl || !sciEl) return;
 
-            punnettContainer.innerHTML = "";
-            const counts = {};
+            const femGametes = getNuclearGametes(femCode);
+            const maleGametes = getNuclearGametes(maleCode);
 
-            gametes1.forEach((g1) => {
-                gametes2.forEach((g2) => {
-                    const childGeno = combineGametes(g1, g2);
-                    const phenoInfo = evaluatePlantPhenotype(childGeno);
+            gridEl.innerHTML = "";
+            const tally = {};
 
-                    counts[phenoInfo.name] = (counts[phenoInfo.name] || 0) + 1;
+            femGametes.forEach((fg) => {
+                maleGametes.forEach((mg) => {
+                    const zygote = mergeNuclearGametes(fg, mg);
+                    const bio = evaluatePlantBiology(zygote, plastidId);
+
+                    tally[bio.commonCategory] = (tally[bio.commonCategory] || 0) + 1;
 
                     const cell = document.createElement("div");
                     cell.className = "punnett-cell";
                     cell.innerHTML = `
-                        <span class="geno-code">${childGeno}</span>
-                        <span class="pheno-tag">${phenoInfo.name.split(" ")[0]}</span>
+                        <span class="cell-title">${bio.shortTitle}</span>
+                        <span class="cell-sub">Kode: ${zygote}</span>
                     `;
 
                     cell.addEventListener("click", () => {
                         document.querySelectorAll(".punnett-cell").forEach((c) => c.classList.remove("selected"));
                         cell.classList.add("selected");
-                        careBox.innerHTML = `
-                            <strong>Sifat Anakan Terpilih (${childGeno} - ${phenoInfo.name}):</strong><br>
-                            ${phenoInfo.care}
+                        careEl.innerHTML = `
+                            <strong>Cara Merawat Bibit "${bio.shortTitle}" (Kode Gen: ${zygote}):</strong><br>
+                            ${bio.careAdvice}
+                        `;
+                        sciEl.innerHTML = `
+                            <strong>Penjelasan Biologi Sel & Genetika:</strong><br>
+                            ${bio.scienceNote}<br>
+                            <em>Catatan: Induk Betina (${femCode}) menyumbang gamet inti sekaligus sitoplasma/plastida, sedangkan Induk Jantan (${maleCode}) hanya menyumbang inti generatif melalui buluh serbuk sari.</em>
                         `;
                     });
 
-                    punnettContainer.appendChild(cell);
+                    gridEl.appendChild(cell);
                 });
             });
 
-            // Tampilkan Ringkasan Persentase
-            let listHtml = `<ul class="stat-list">`;
-            Object.keys(counts).forEach((phenoName) => {
-                const pct = ((counts[phenoName] / 16) * 100).toFixed(1);
-                listHtml += `
+            let htmlList = `<ul class="stat-list">`;
+            Object.keys(tally).forEach((cat) => {
+                const pct = ((tally[cat] / 16) * 100).toFixed(1);
+                htmlList += `
                     <li>
-                        <span>${phenoName}</span>
-                        <span class="badge badge-green">${pct}% (${counts[phenoName]} dari 16)</span>
+                        <span>${cat}</span>
+                        <span class="badge badge-green">${pct}% (${tally[cat]} dari 16 bibit)</span>
                     </li>
                 `;
             });
-            listHtml += `</ul>`;
-            summaryBox.innerHTML = listHtml;
+            htmlList += `</ul>`;
+            sumEl.innerHTML = htmlList;
 
-            // Pilih otomatis kotak pertama untuk panduan awal
-            const firstCell = punnettContainer.querySelector(".punnett-cell");
+            const firstCell = gridEl.querySelector(".punnett-cell");
             if (firstCell) firstCell.click();
         }
 
-        // 4. LOGIKA GOLONGAN DARAH & NUTRISI KELUARGA (MODUL 2)
-        function populateFamilySelectors() {
-            const fatherSel = document.getElementById("bloodFather");
-            const motherSel = document.getElementById("bloodMother");
-            const lactoseSel = document.getElementById("lactoseTrait");
-            const caffeineSel = document.getElementById("caffeineTrait");
+        // =========================================================================
+        // 4. MODUL 2: KELUARGA (DIHIBRID ABO x RHESUS + GEN LCT + GEN CYP1A2)
+        // =========================================================================
+        function initFamilyModule() {
+            const bf = document.getElementById("bloodFather");
+            const bm = document.getElementById("bloodMother");
+            const rf = document.getElementById("rhesusFather");
+            const rm = document.getElementById("rhesusMother");
+            const lac = document.getElementById("lactoseParents");
+            const caf = document.getElementById("caffeineParents");
 
-            appDB.bloodTypes.forEach((bt, idx) => {
+            db.aboTypes.forEach((item, idx) => {
                 const o1 = document.createElement("option");
-                o1.value = bt.id;
-                o1.textContent = bt.label;
-                fatherSel.appendChild(o1);
+                o1.value = item.id; o1.textContent = item.label;
+                bf.appendChild(o1);
 
                 const o2 = document.createElement("option");
-                o2.value = bt.id;
-                o2.textContent = bt.label;
+                o2.value = item.id; o2.textContent = item.label;
                 if (idx === 2) o2.selected = true;
-                motherSel.appendChild(o2);
+                bm.appendChild(o2);
             });
 
-            appDB.lactoseOptions.forEach((item) => {
+            db.rhesusTypes.forEach((item) => {
+                const o1 = document.createElement("option");
+                o1.value = item.id; o1.textContent = item.label;
+                rf.appendChild(o1);
+
+                const o2 = document.createElement("option");
+                o2.value = item.id; o2.textContent = item.label;
+                rm.appendChild(o2);
+            });
+
+            db.lactoseCrosses.forEach((item) => {
                 const opt = document.createElement("option");
-                opt.value = item.id;
-                opt.textContent = item.label;
-                lactoseSel.appendChild(opt);
+                opt.value = item.id; opt.textContent = item.label;
+                lac.appendChild(opt);
             });
 
-            appDB.caffeineOptions.forEach((item) => {
+            db.caffeineCrosses.forEach((item) => {
                 const opt = document.createElement("option");
-                opt.value = item.id;
-                opt.textContent = item.label;
-                caffeineSel.appendChild(opt);
+                opt.value = item.id; opt.textContent = item.label;
+                caf.appendChild(opt);
             });
 
-            renderFamilyAnalysis();
+            calculateFamilyGenetics();
         }
 
-        function mapAllelesToBloodGroup(a1, a2) {
-            const pair = [a1, a2].sort().join("");
-            if (pair === "IAIA" || pair === "IAi") return "Golongan Darah A";
-            if (pair === "IBIB" || pair === "IBi") return "Golongan Darah B";
-            if (pair === "IAIB") return "Golongan Darah AB";
-            return "Golongan Darah O";
+        function determineABO(a1, a2) {
+            const p = [a1, a2].sort().join("");
+            if (p === "IAIA" || p === "IAi") return "A";
+            if (p === "IBIB" || p === "IBi") return "B";
+            if (p === "IAIB") return "AB";
+            return "O";
         }
 
-        function renderFamilyAnalysis() {
-            const fId = document.getElementById("bloodFather")?.value;
-            const mId = document.getElementById("bloodMother")?.value;
-            const lacId = document.getElementById("lactoseTrait")?.value;
-            const cafId = document.getElementById("caffeineTrait")?.value;
-            const outContainer = document.getElementById("familyResultContainer");
+        function determineRh(r1, r2) {
+            return (r1 === "D" || r2 === "D") ? "+" : "-";
+        }
 
-            if (!outContainer) return;
+        function calculateAutosomalCross(p1Alleles, p2Alleles) {
+            const genotypes = [];
+            p1Alleles.forEach((a1) => {
+                p2Alleles.forEach((a2) => {
+                    genotypes.push([a1, a2].sort().join(""));
+                });
+            });
+            return genotypes;
+        }
 
-            const fatherObj = appDB.bloodTypes.find((b) => b.id === fId) ?? appDB.bloodTypes[0];
-            const motherObj = appDB.bloodTypes.find((b) => b.id === mId) ?? appDB.bloodTypes[0];
-            const lactoseObj = appDB.lactoseOptions.find((l) => l.id === lacId) ?? appDB.lactoseOptions[0];
-            const caffeineObj = appDB.caffeineOptions.find((c) => c.id === cafId) ?? appDB.caffeineOptions[0];
+        function calculateFamilyGenetics() {
+            const bfObj = db.aboTypes.find((x) => x.id === document.getElementById("bloodFather")?.value) ?? db.aboTypes[0];
+            const bmObj = db.aboTypes.find((x) => x.id === document.getElementById("bloodMother")?.value) ?? db.aboTypes[0];
+            const rfObj = db.rhesusTypes.find((x) => x.id === document.getElementById("rhesusFather")?.value) ?? db.rhesusTypes[0];
+            const rmObj = db.rhesusTypes.find((x) => x.id === document.getElementById("rhesusMother")?.value) ?? db.rhesusTypes[0];
+            const lacObj = db.lactoseCrosses.find((x) => x.id === document.getElementById("lactoseParents")?.value) ?? db.lactoseCrosses[0];
+            const cafObj = db.caffeineCrosses.find((x) => x.id === document.getElementById("caffeineParents")?.value) ?? db.caffeineCrosses[0];
 
-            const outcomes = {};
-            fatherObj.alleles.forEach((fa) => {
-                motherObj.alleles.forEach((ma) => {
-                    const bg = mapAllelesToBloodGroup(fa, ma);
-                    outcomes[bg] = (outcomes[bg] || 0) + 25;
+            const resBox = document.getElementById("familyResultContainer");
+            const sciBox = document.getElementById("familyScienceBox");
+            if (!resBox || !sciBox) return;
+
+            // 1. Hitung 16 Kombinasi Gamet Dihibrid ABO x Rhesus
+            const bloodTally = {};
+            let rhPositiveChildCount = 0;
+
+            bfObj.alleles.forEach((fa) => {
+                rfObj.alleles.forEach((fr) => {
+                    bmObj.alleles.forEach((ma) => {
+                        rmObj.alleles.forEach((mr) => {
+                            const abo = determineABO(fa, ma);
+                            const rh = determineRh(fr, mr);
+                            if (rh === "+") rhPositiveChildCount++;
+                            const label = `Golongan Darah ${abo}${rh}`;
+                            bloodTally[label] = (bloodTally[label] || 0) + 1;
+                        });
+                    });
                 });
             });
 
-            let bloodHtml = `<ul class="stat-list">`;
-            Object.keys(outcomes).forEach((bgName) => {
-                bloodHtml += `
+            // Cek Inkompatibilitas Rhesus (Ibu dd / Rh-, Janin berpeluang D_ / Rh+)
+            const isMotherRhNeg = (rmObj.id === "neg");
+            const hasRhIncompatibilityRisk = isMotherRhNeg && (rhPositiveChildCount > 0);
+
+            // 2. Hitung Peluang Gen LCT (Laktosa) pada Anak
+            const lctOffspring = calculateAutosomalCross(lacObj.p1, lacObj.p2);
+            const lactoseIntolerantCount = lctOffspring.filter((g) => g === "tt").length;
+            const lactoseIntolerantPct = (lactoseIntolerantCount / 4) * 100;
+
+            // 3. Hitung Peluang Gen CYP1A2 (Kafein) pada Anak
+            const cypOffspring = calculateAutosomalCross(cafObj.p1, cafObj.p2);
+            const slowCaffeineCount = cypOffspring.filter((g) => g !== "FF").length;
+            const slowCaffeinePct = (slowCaffeineCount / 4) * 100;
+
+            let bloodListHtml = `<ul class="stat-list">`;
+            Object.keys(bloodTally).forEach((k) => {
+                const pct = ((bloodTally[k] / 16) * 100).toFixed(1);
+                bloodListHtml += `
                     <li>
-                        <span>${bgName}</span>
-                        <span class="badge badge-blue">Peluang ${outcomes[bgName]}%</span>
+                        <span>${k}</span>
+                        <span class="badge badge-blue">Peluang ${pct}%</span>
                     </li>
                 `;
             });
-            bloodHtml += `</ul>`;
+            bloodListHtml += `</ul>`;
 
-            outContainer.innerHTML = `
+            let rhesusWarningHtml = "";
+            if (hasRhIncompatibilityRisk) {
+                rhesusWarningHtml = `
+                    <div class="info-box danger">
+                        <strong>Perhatian Penting Kehamilan (Beda Rhesus Ibu & Anak):</strong><br>
+                        Karena Ibu memiliki <strong>Rhesus Negatif (-)</strong> sedangkan Ayah membawa <strong>Rhesus Positif (+)</strong>, ada peluang janin memiliki Rhesus Positif. Pada kehamilan kedua dan seterusnya, wajib konsultasi ke dokter kandungan untuk suntik pengaman (Anti-D) agar sel darah bayi tetap aman.
+                    </div>
+                `;
+            }
+
+            resBox.innerHTML = `
                 <div>
-                    <strong>1. Kemungkinan Golongan Darah Anak / Cucu:</strong>
-                    ${bloodHtml}
+                    <strong>1. Peluang Golongan Darah & Rhesus Anak / Cucu:</strong>
+                    ${bloodListHtml}
                 </div>
+                ${rhesusWarningHtml}
                 <div class="info-box">
-                    <strong>2. Panduan Konsumsi Susu & Kalsium Harian:</strong><br>
-                    ${lactoseObj.advice}
+                    <strong>2. Bakat Pencernaan Susu pada Anak (Peluang Kurang Enzim Susu: ${lactoseIntolerantPct}%):</strong><br>
+                    ${lactoseIntolerantPct >= 50
+                        ? "Anak/cucu memiliki peluang cukup besar mewarisi perut yang mudah kembung jika minum susu sapi segar berlebih. Sangat disarankan memilih Yogurt, Keju, Tempe, atau Susu Rendah Laktosa sebagai sumber kalsium harian."
+                        : "Mayoritas anak/cucu mewarisi pencernaan yang nyaman terhadap susu sapi segar hingga dewasa."}
                 </div>
                 <div class="info-box warning">
-                    <strong>3. Panduan Minum Kopi, Teh & Kesehatan Jantung:</strong><br>
-                    ${caffeineObj.advice}
+                    <strong>3. Bakat Kepekaan Kopi & Teh pada Anak (Peluang Sensitif Kafein: ${slowCaffeinePct}%):</strong><br>
+                    ${slowCaffeinePct >= 50
+                        ? "Keturunan cenderung mewarisi penguraian kafein yang lambat. Sebaiknya batasi minum kopi/teh kental maksimal 1 cangkir di pagi hari agar tidur malam tetap berkualitas dan jantung tidak berdebar."
+                        : "Keturunan mewarisi enzim hati yang cepat menetralkan kafein, sehingga relatif aman menikmati kopi/teh hangat secara wajar."}
                 </div>
+            `;
+
+            sciBox.innerHTML = `
+                <strong>Dasar Ilmiah Genetika Manusia:</strong><br>
+                • <strong>Sistem ABO & Rhesus:</strong> Dihitung dengan matriks dihibrid 16 kotak antara lokus <em>ABO</em> (Kromosom 9, kodominan $I^A I^B$, resesif $i$) dan lokus <em>RHD</em> (Kromosom 1, dominan $D$). Deteksi otomatis risiko <em>Erythroblastosis fetalis</em> bila Ibu homozigot resesif ($dd$) dan zigot heterozigot ($Dd$).<br>
+                • <strong>Gen LCT (Kromosom 2q21):</strong> Alel <em>t</em> (non-persistence) bersifat resesif autosomal yang menyebabkan penurunan ekspresi enzim laktase pasca-sapih.<br>
+                • <strong>Gen CYP1A2 (Kromosom 15q24):</strong> Polimorfisme enzim sitokrom P450 hati yang mengatur laju demetilasi kafein (paruh waktu kafein di plasma darah).
             `;
         }
 
-        // 5. LOGIKA SELEKSI BIBIT IKAN & BURUNG HOBI (MODUL 3)
-        function populateBreedingSelectors() {
-            const kinshipSel = document.getElementById("kinshipRelation");
+        // =========================================================================
+        // 5. MODUL 3: SELEKSI BIBIT (BREEDER'S EQUATION + INBREEDING DEPRESSION)
+        // =========================================================================
+        function initBreedingModule() {
+            const kinSel = document.getElementById("kinshipRelation");
             const traitSel = document.getElementById("heritabilityTrait");
 
-            appDB.kinshipList.forEach((k) => {
+            db.kinshipRelations.forEach((k) => {
                 const opt = document.createElement("option");
-                opt.value = k.id;
-                opt.textContent = k.label;
-                kinshipSel.appendChild(opt);
+                opt.value = k.id; opt.textContent = k.label;
+                kinSel.appendChild(opt);
             });
 
-            appDB.heritabilityTraits.forEach((t) => {
+            db.breedingTraits.forEach((t) => {
                 const opt = document.createElement("option");
-                opt.value = t.id;
-                opt.textContent = t.label;
+                opt.value = t.id; opt.textContent = t.label;
                 traitSel.appendChild(opt);
             });
 
-            renderBreedingEvaluation();
+            calculateBreedingScience();
         }
 
-        function renderBreedingEvaluation() {
-            const kinId = document.getElementById("kinshipRelation")?.value;
-            const traitId = document.getElementById("heritabilityTrait")?.value;
-            const avgPop = parseFloat(document.getElementById("avgPopulation")?.value ?? "70");
-            const selPar = parseFloat(document.getElementById("selectedParents")?.value ?? "85");
-            const outContainer = document.getElementById("breedingResultContainer");
+        function calculateBreedingScience() {
+            const kinObj = db.kinshipRelations.find((k) => k.id === document.getElementById("kinshipRelation")?.value) ?? db.kinshipRelations[0];
+            const traitObj = db.breedingTraits.find((t) => t.id === document.getElementById("heritabilityTrait")?.value) ?? db.breedingTraits[0];
 
-            if (!outContainer) return;
+            const rawPop = parseFloat(document.getElementById("avgPopulation")?.value ?? "70");
+            const rawPar = parseFloat(document.getElementById("selectedParents")?.value ?? "88");
 
-            const kinObj = appDB.kinshipList.find((k) => k.id === kinId) ?? appDB.kinshipList[0];
-            const traitObj = appDB.heritabilityTraits.find((t) => t.id === traitId) ?? appDB.heritabilityTraits[0];
+            const meanPop = isNaN(rawPop) ? 70 : Math.min(Math.max(rawPop, 10), 100);
+            const meanParents = isNaN(rawPar) ? 88 : Math.min(Math.max(rawPar, 10), 100);
 
-            const validPop = isNaN(avgPop) ? 70 : Math.min(Math.max(avgPop, 1), 100);
-            const validPar = isNaN(selPar) ? 85 : Math.min(Math.max(selPar, 1), 100);
+            const outBox = document.getElementById("breedingResultContainer");
+            const sciBox = document.getElementById("breedingScienceBox");
+            if (!outBox || !sciBox) return;
 
-            // Rumus Seleksi Genetika (R = h2 * S) dikurangi penalti silang dalam (inbreeding)
-            const selectionDiff = validPar - validPop;
-            const geneticGain = traitObj.h2 * selectionDiff;
-            const inbreedingPenalty = kinObj.fValue * 20;
-            const predictedOffspringScore = Math.min(100, Math.max(10, validPop + geneticGain - inbreedingPenalty)).toFixed(1);
+            // 1. Breeder's Equation: R = h^2 * S
+            const selectionDifferentialS = meanParents - meanPop;
+            const responseR = traitObj.h2 * selectionDifferentialS;
 
-            const fPercent = (kinObj.fValue * 100).toFixed(2);
-            let boxStyle = "info-box";
-            let recommendationText = "Pasangan indukan ini sangat ideal untuk dikawinkan. Anakan akan memiliki daya tahan tubuh yang kuat dan sifat unggul indukan dapat menurun secara optimal.";
+            // 2. Rumus Ilmiah Depresi Inbreeding: Delta_M = -b * F
+            // b adalah kemiringan regresi spesifik per sifat (traitObj.depressionSlope)
+            const inbreedingLoss = traitObj.depressionSlope * kinObj.fCoeff;
 
-            if (kinObj.fValue >= 0.25) {
-                boxStyle = "info-box danger";
-                recommendationText = "Sebaiknya HINDARI mengawinkan pasangan ini secara berulang. Karena hubungan darahnya terlalu dekat, risiko anakan tumbuh kerdil, tulang bengkok, atau daya tetas telur menurun sangat tinggi. Silakan cari indukan silangan baru dari luar.";
-            } else if (kinObj.fValue >= 0.125) {
-                boxStyle = "info-box warning";
-                recommendationText = "Pasangan ini masih boleh dikawinkan untuk mengunci warna/bentuk tubuh (Line Breeding), namun wajib lakukan seleksi ketat dan jangan mengawinkan sesama anakannya lagi di generasi berikutnya.";
+            // 3. Nilai Fenotipe Rata-rata Generasi F1
+            const expectedOffspringMean = Math.min(100, Math.max(10, meanPop + responseR - inbreedingLoss));
+            const fPercentage = (kinObj.fCoeff * 100).toFixed(2);
+
+            let statusBoxClass = "info-box";
+            let practicalAdvice = "";
+
+            if (kinObj.fCoeff >= 0.25) {
+                statusBoxClass = "info-box danger";
+                practicalAdvice = `<strong>Sebaiknya Jangan Dijodohkan!</strong> Karena kedua indukan masih saudara kandung / induk-anak, anakan mengalami penurunan mutu sebesar <strong>-${inbreedingLoss.toFixed(1)} poin</strong> akibat kawin sedarah. Anakan rawan kerdil, daya tetas rendah, atau mudah mati. Silakan cari pasangan indukan dari peternak lain (Penyegaran Darah).`;
+            } else if (kinObj.fCoeff >= 0.125) {
+                statusBoxClass = "info-box warning";
+                practicalAdvice = `<strong>Boleh Dijodohkan Sekali Saja (Line-Breeding):</strong> Perkawinan saudara tiri ini sering dipakai penghobi untuk mengunci keindahan warna/bentuk, namun ada sedikit penurunan vitalitas sebesar <strong>-${inbreedingLoss.toFixed(1)} poin</strong>. Anakannya kelak wajib disilangkan dengan indukan luar.`;
+            } else {
+                practicalAdvice = `<strong>Pasangan Indukan Sangat Bagus & Aman!</strong> Hubungan darah aman (${fPercentage}%), sehingga keunggulan indukan dapat diwariskan secara murni sebesar <strong>+${responseR.toFixed(1)} poin</strong> tanpa gangguan cacat kawin sedarah.`;
             }
 
-            outContainer.innerHTML = `
+            outBox.innerHTML = `
                 <ul class="stat-list">
                     <li>
-                        <span>Tingkat Kawin Sedarah (Risiko Inbreeding):</span>
-                        <span class="badge ${kinObj.fValue >= 0.125 ? 'badge-red' : 'badge-green'}">${fPercent}% (${kinObj.status})</span>
+                        <span>Tingkat Hubungan Darah (Risiko Sedarah):</span>
+                        <span class="badge ${kinObj.fCoeff >= 0.125 ? 'badge-red' : 'badge-green'}">${fPercentage}% (${kinObj.riskName})</span>
                     </li>
                     <li>
-                        <span>Tambahan Mutu Genetik Murni:</span>
-                        <span class="badge badge-blue">${geneticGain >= 0 ? '+' : ''}${geneticGain.toFixed(1)} Poin</span>
+                        <span>Peningkatan Mutu dari Keunggulan Indukan:</span>
+                        <span class="badge badge-blue">${responseR >= 0 ? '+' : ''}${responseR.toFixed(1)} Poin</span>
                     </li>
                     <li>
-                        <span>Perkiraan Skor Kualitas Anakan:</span>
-                        <span class="badge badge-amber">Skor ${predictedOffspringScore} dari 100</span>
+                        <span>Pengurangan Mutu Akibat Kawin Sedarah:</span>
+                        <span class="badge ${inbreedingLoss > 0 ? 'badge-red' : 'badge-green'}">-${inbreedingLoss.toFixed(1)} Poin</span>
+                    </li>
+                    <li>
+                        <span>Perkiraan Nilai Rata-Rata Anakan Nanti:</span>
+                        <span class="badge badge-amber">Skor ${expectedOffspringMean.toFixed(1)} dari 100</span>
                     </li>
                 </ul>
-                <div class="${boxStyle}">
-                    <strong>Saran Praktis untuk Bapak:</strong><br>
-                    ${recommendationText}
+                <div class="${statusBoxClass}">
+                    ${practicalAdvice}<br><br>
+                    <em>Catatan Sifat: ${traitObj.note}</em>
                 </div>
+            `;
+
+            sciBox.innerHTML = `
+                <strong>Dasar Ilmiah Genetika Kuantitatif & Populasi:</strong><br>
+                • <strong>Persamaan Pemuliaan (Breeder's Equation):</strong> $R = h^2 \\times S = ${traitObj.h2} \\times (${meanParents} - ${meanPop}) = ${responseR.toFixed(2)}$.<br>
+                • <strong>Koefisien Inbreeding Wright ($F$):</strong> $F = ${kinObj.fCoeff}$ (${fPercentage}% probabilitas alel <em>Identical By Descent / IBD</em>).<br>
+                • <strong>Depresi Silang Dalam ($\Delta M = -b \\times F$):</strong> Menggunakan koefisien sensitivitas sifat ($b = ${traitObj.depressionSlope}$), di mana sifat kebugaran reproduksi (*fitness traits*) mengalami depresi jauh lebih berat dibandingkan sifat morfologi/warna akibat terekspresinya alel resesif merugikan (*deleterious recessive alleles*).
             `;
         }
 
-        // 6. INISIALISASI EVENT LISTENER UTAMA
+        // =========================================================================
+        // 6. INISIALISASI APLIKASI UTAMA
+        // =========================================================================
         document.addEventListener("DOMContentLoaded", () => {
-            // Navigasi Tab
-            const tabButtons = document.querySelectorAll(".tab-btn");
+            const tabBtns = document.querySelectorAll(".tab-btn");
             const tabPanels = document.querySelectorAll(".tab-panel");
 
-            tabButtons.forEach((btn) => {
+            tabBtns.forEach((btn) => {
                 btn.addEventListener("click", () => {
-                    const targetId = btn.getAttribute("data-target");
-                    tabButtons.forEach((b) => b.classList.remove("active"));
+                    const target = btn.getAttribute("data-target");
+                    tabBtns.forEach((b) => b.classList.remove("active"));
                     tabPanels.forEach((p) => p.classList.remove("active"));
 
                     btn.classList.add("active");
-                    const targetPanel = document.getElementById(targetId);
-                    if (targetPanel) targetPanel.classList.add("active");
+                    document.getElementById(target)?.classList.add("active");
                 });
             });
 
-            // Muat semua modul
-            populatePlantSelectors();
-            populateFamilySelectors();
-            populateBreedingSelectors();
+            initPlantModule();
+            initFamilyModule();
+            initBreedingModule();
 
-            // Tombol Aksi
-            document.getElementById("btnCrossPlant")?.addEventListener("click", renderPlantCross);
-            document.getElementById("parent1Gen")?.addEventListener("change", renderPlantCross);
-            document.getElementById("parent2Gen")?.addEventListener("change", renderPlantCross);
+            // Event Listeners Modul 1
+            document.getElementById("btnCrossPlant")?.addEventListener("click", calculatePlantCross);
+            document.getElementById("maternalChloroplast")?.addEventListener("change", calculatePlantCross);
+            document.getElementById("femaleNuclearGen")?.addEventListener("change", calculatePlantCross);
+            document.getElementById("maleNuclearGen")?.addEventListener("change", calculatePlantCross);
 
-            document.getElementById("btnAnalyzeFamily")?.addEventListener("click", renderFamilyAnalysis);
-            document.getElementById("btnCalcBreeding")?.addEventListener("click", renderBreedingEvaluation);
+            // Event Listeners Modul 2
+            document.getElementById("btnAnalyzeFamily")?.addEventListener("click", calculateFamilyGenetics);
+
+            // Event Listeners Modul 3
+            document.getElementById("btnCalcBreeding")?.addEventListener("click", calculateBreedingScience);
+            document.getElementById("kinshipRelation")?.addEventListener("change", calculateBreedingScience);
+            document.getElementById("heritabilityTrait")?.addEventListener("change", calculateBreedingScience);
         });
     </script>
 </body>
