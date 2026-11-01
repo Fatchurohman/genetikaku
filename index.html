@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenetikaKu - Aplikasi Genetika Harian</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #090d16;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+            --accent-green-hover: #059669;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        header .dev-badge {
+            display: inline-block;
+            margin-top: 6px;
+            background-color: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--accent-green);
+            color: #6ee7b7;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        header p.subtitle {
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Container & Tabs */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 220px;
+            background-color: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-green);
+            color: #ffffff;
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Layout Grid */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 850px) {
+            .tab-panel.active {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards & Forms */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #6ee7b7;
+        }
+
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #e2e8f0;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            outline: none;
+        }
+
+        select:focus, input[type="number"]:focus {
+            border-color: var(--accent-green);
+        }
+
+        .btn-action {
+            width: 100%;
+            background-color: var(--accent-green);
+            color: #ffffff;
+            border: none;
+            padding: 13px 18px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-action:hover {
+            background-color: var(--accent-green-hover);
+        }
+
+        /* Punnett Grid 4x4 */
+        .punnett-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .punnett-cell {
+            background-color: var(--bg-input);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+        }
+
+        .punnett-cell:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green);
+        }
+
+        .punnett-cell.selected {
+            border-color: var(--accent-amber);
+            background-color: rgba(245, 158, 11, 0.15);
+        }
+
+        .geno-code {
+            font-family: monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .pheno-tag {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Info Boxes & Badges */
+        .info-box {
+            background-color: var(--bg-input);
+            border-left: 4px solid var(--accent-green);
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+        }
+
+        .info-box.warning {
+            border-left-color: var(--accent-amber);
+        }
+
+        .info-box.danger {
+            border-left-color: var(--accent-red);
+        }
+
+        .stat-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .stat-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            padding: 2px 10px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+        .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+        .badge-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GenetikaKu : Aplikasi Genetika Kehidupan Sehari-hari</h1>
+        <div class="dev-badge">developer : fatur62</div>
+        <p class="subtitle">Panduan Praktis Persilangan Tanaman Hias, Kesehatan Keluarga, dan Seleksi Bibit Ternak Hobi</p>
+    </header>
+
+    <div class="container">
+        <!-- Menu Navigasi Modul -->
+        <nav class="nav-tabs" id="navTabs">
+            <button class="tab-btn active" data-target="panel-tanaman">1. Persilangan Tanaman Hias</button>
+            <button class="tab-btn" data-target="panel-keluarga">2. Golongan Darah & Nutrisi Keluarga</button>
+            <button class="tab-btn" data-target="panel-ternak">3. Seleksi Bibit Ikan & Burung Hobi</button>
+        </nav>
+
+        <!-- MODUL 1: TANAMAN HIAS -->
+        <section id="panel-tanaman" class="tab-panel active">
+            <div class="card">
+                <h2 class="card-title">Pengaturan Indukan Tanaman</h2>
+                <p class="card-desc">Silangkan dua indukan tanaman untuk melihat peluang warna daun/bunga pada anakan beserta cara perawatannya.</p>
+
+                <div class="form-group">
+                    <label for="plantType">Pilih Jenis Tanaman Pekarangan:</label>
+                    <select id="plantType"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent1Gen">Sifat Indukan Pertama (Serbuk Sari):</label>
+                    <select id="parent1Gen"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent2Gen">Sifat Indukan Kedua (Putik):</label>
+                    <select id="parent2Gen"></select>
+                </div>
+
+                <button class="btn-action" id="btnCrossPlant">Hitung Hasil Persilangan</button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Peta Kemungkinan Anakan (16 Kombinasi)</h2>
+                <p class="card-desc">Klik pada salah satu kotak di bawah untuk melihat panduan merawat anakan tersebut:</p>
+                
+                <div id="punnettContainer" class="punnett-grid"></div>
+                <div id="plantSummaryBox"></div>
+                <div id="plantCareBox" class="info-box"></div>
+            </div>
+        </section>
+
+        <!-- MODUL 2: KELUARGA & NUTRISI -->
+        <section id="panel-keluarga" class="tab-panel">
+            <div class="card">
+                <h2 class="card-title">Data Orang Tua / Kakek-Nenek</h2>
+                <p class="card-desc">Prediksi golongan darah anak/cucu serta kecocokan pola makan harian berdasarkan sifat bawaan keluarga.</p>
+
+                <div class="form-group">
+                    <label for="bloodFather">Golongan Darah Ayah:</label>
+                    <select id="bloodFather"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bloodMother">Golongan Darah Ibu:</label>
+                    <select id="bloodMother"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lactoseTrait">Reaksi Keluarga Terhadap Susu Sapi (Laktosa):</label>
+                    <select id="lactoseTrait"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="caffeineTrait">Sensitivitas Tubuh Terhadap Kopi / Teh:</label>
+                    <select id="caffeineTrait"></select>
+                </div>
+
+                <button class="btn-action" id="btnAnalyzeFamily">Tampilkan Analisis Keluarga</button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Hasil Prediksi & Panduan Menu Harian</h2>
+                <p class="card-desc">Penjelasan ringan mengenai peluang sifat keturunan dan saran asupan makanan sehari-hari.</p>
+                <div id="familyResultContainer"></div>
+            </div>
+        </section>
+
+        <!-- MODUL 3: SELEKSI BIBIT TERNAK / IKAN HOBI -->
+        <section id="panel-ternak" class="tab-panel">
+            <div class="card">
+                <h2 class="card-title">Kalkulator Pasangan Indukan Hobi</h2>
+                <p class="card-desc">Cegah anakan kerdil atau cacat akibat kawin sedarah (Inbreeding) pada ikan hias, burung berkicau, atau ayam hias.</p>
+
+                <div class="form-group">
+                    <label for="kinshipRelation">Hubungan Kekerabatan Calon Indukan:</label>
+                    <select id="kinshipRelation"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="heritabilityTrait">Sifat Unggulan yang Ingin Diturunkan:</label>
+                    <select id="heritabilityTrait"></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="avgPopulation">Nilai Rata-Rata Kolam / Kandang Saat Ini (Skor 1 - 100):</label>
+                    <input type="number" id="avgPopulation" value="70" min="10" max="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="selectedParents">Nilai Rata-Rata Indukan Pilihan Bapak (Skor 1 - 100):</label>
+                    <input type="number" id="selectedParents" value="88" min="10" max="100">
+                </div>
+
+                <button class="btn-action" id="btnCalcBreeding">Evaluasi Kualitas Anakan</button>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Rekomendasi & Prediksi Anakan</h2>
+                <p class="card-desc">Analisis keamanan silsilah indukan dan perkiraan peningkatan mutu anakan generasi berikutnya.</p>
+                <div id="breedingResultContainer"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 1. DATA JSON INTERNAL (Dikelola dengan aman)
+        const RAW_DATABASE_JSON = `{
+            "plants": {
+                "aglaonema": {
+                    "name": "Aglaonema (Sri Rezeki)",
+                    "genotypes": [
+                        { "code": "MMBB", "label": "Merah Pekat Mengkilap (MMBB)" },
+                        { "code": "MmBb", "label": "Kombinasi Merah-Hijau / Variegata (MmBb)" },
+                        { "code": "mmBB", "label": "Hijau Klasik Tahan Banting (mmBB)" },
+                        { "code": "Mmbb", "label": "Merah Pucat / Klorofil Rendah (Mmbb)" }
+                    ]
+                },
+                "anggrek": {
+                    "name": "Anggrek Bulan (Phalaenopsis)",
+                    "genotypes": [
+                        { "code": "MMBB", "label": "Ungu Pekat Kelopak Lebar (MMBB)" },
+                        { "code": "MmBb", "label": "Corak Bintik / Belang Harlequin (MmBb)" },
+                        { "code": "mmBB", "label": "Putih Bersih Kelopak Lebar (mmBB)" },
+                        { "code": "mmbb", "label": "Putih Mini Bibir Kuning (mmbb)" }
+                    ]
+                },
+                "adenium": {
+                    "name": "Adenium (Kamboja Jepang)",
+                    "genotypes": [
+                        { "code": "MMBB", "label": "Merah Tumpuk Bonggol Besar (MMBB)" },
+                        { "code": "MmBb", "label": "Merah Muda Garis Tepi Putih (MmBb)" },
+                        { "code": "mmBB", "label": "Putih Tumpuk Bonggol Besar (mmBB)" },
+                        { "code": "Mmbb", "label": "Merah Muda Cabang Ramping (Mmbb)" }
+                    ]
+                }
+            },
+            "bloodTypes": [
+                { "id": "A_hetero", "label": "Golongan A (Umum / IA i)", "alleles": ["IA", "i"] },
+                { "id": "A_homo", "label": "Golongan A Murni (IA IA)", "alleles": ["IA", "IA"] },
+                { "id": "B_hetero", "label": "Golongan B (Umum / IB i)", "alleles": ["IB", "i"] },
+                { "id": "B_homo", "label": "Golongan B Murni (IB IB)", "alleles": ["IB", "IB"] },
+                { "id": "AB", "label": "Golongan AB (IA IB)", "alleles": ["IA", "IB"] },
+                { "id": "O", "label": "Golongan O (i i)", "alleles": ["i", "i"] }
+            ],
+            "lactoseOptions": [
+                { "id": "normal", "label": "Aman Minum Susu (Pencernaan Nyaman)", "advice": "Tubuh masih memproduksi enzim pengurai gula susu dengan baik. Susu sapi segar, keju, dan yogurt aman dikonsumsi harian untuk menjaga kepadatan tulang." },
+                { "id": "sensitive", "label": "Mudah Kembung / Mulas Setelah Minum Susu Sapi", "advice": "Produksi enzim laktase alami mulai berkurang seiring usia. Ganti susu biasa dengan Susu Rendah Laktosa, Susu Kedelai, Tempe, atau Yogurt (karena bakteri baik pada yogurt sudah membantu mengurai laktosa)." }
+            ],
+            "caffeineOptions": [
+                { "id": "fast", "label": "Cepat Netral (Minum Kopi Sore Tetap Bisa Tidur Nyenyak)", "advice": "Enzim hati mengurai kafein dengan cepat. Kopi atau teh hangat 1-2 cangkir sehari aman bagi jantung, namun tetap batasi gula pasir." },
+                { "id": "slow", "label": "Sensitif (Jantung Berdebar / Sulit Tidur Jika Minum Kopi)", "advice": "Kafein bertahan lebih lama di pembuluh darah. Sebaiknya nikmati kopi/teh hanya di pagi hari sebelum pukul 11.00 WIB, atau beralih ke seduhan jahe merah, serai, dan teh bunga telang." }
+            ],
+            "kinshipList": [
+                { "id": "unrelated", "label": "Beda Indukan / Beli dari Peternak Berbeda (Tidak Sedarah)", "fValue": 0.0, "status": "Sangat Aman" },
+                { "id": "cousin", "label": "Sepupu (Kakek/Neneknya Sama)", "fValue": 0.0625, "status": "Masih Aman Terkendali" },
+                { "id": "half_sibling", "label": "Saudara Tiri (Satu Induk Jantan Saja / Betina Saja)", "fValue": 0.125, "status": "Waspada (Batas Maksimal)" },
+                { "id": "full_sibling", "label": "Saudara Kandung Satu Tetasan / Induk ke Anak", "fValue": 0.25, "status": "Berisiko Tinggi Cacat / Kerdil" }
+            ],
+            "heritabilityTraits": [
+                { "id": "color", "label": "Warna Sisik Ikan / Bulu Burung (Daya Turun Tinggi: 60%)", "h2": 0.60 },
+                { "id": "body_shape", "label": "Postur Tubuh & Ukuran Ekor (Daya Turun Sedang: 45%)", "h2": 0.45 },
+                { "id": "voice_stamina", "label": "Kualitas Suara Kicauan & Mental (Daya Turun: 30% + Latihan)", "h2": 0.30 },
+                { "id": "egg_fertility", "label": "Jumlah Telur & Daya Tahan Penyakit (Daya Turun Rendah: 20%)", "h2": 0.20 }
+            ]
+        }`;
+
+        // 2. FUNGSI PARSING JSON AMAN DENGAN VALIDASI NULL/UNDEFINED
+        function parseDatabaseSafely(rawJson) {
+            try {
+                if (!rawJson || typeof rawJson !== "string") {
+                    throw new Error("Sumber data JSON kosong atau tidak valid.");
+                }
+                const parsed = JSON.parse(rawJson);
+                if (!parsed || typeof parsed !== "object") {
+                    throw new Error("Format objek JSON rusak.");
+                }
+                return parsed;
+            } catch (error) {
+                console.error("Kesalahan Parsing Data:", error.message);
+                return {
+                    plants: {},
+                    bloodTypes: [],
+                    lactoseOptions: [],
+                    caffeineOptions: [],
+                    kinshipList: [],
+                    heritabilityTraits: []
+                };
+            }
+        }
+
+        const appDB = parseDatabaseSafely(RAW_DATABASE_JSON);
+
+        // 3. LOGIKA GENETIKA TANAMAN (MODUL 1)
+        function extractGametes(genotypeStr) {
+            if (!genotypeStr || typeof genotypeStr !== "string" || genotypeStr.length !== 4) {
+                return ["MB", "Mb", "mB", "mb"];
+            }
+            const mAlleles = [genotypeStr[0], genotypeStr[1]];
+            const bAlleles = [genotypeStr[2], genotypeStr[3]];
+            const gametes = [];
+            for (const m of mAlleles) {
+                for (const b of bAlleles) {
+                    gametes.push(`${m}${b}`);
+                }
+            }
+            return gametes;
+        }
+
+        function combineGametes(g1, g2) {
+            const mPair = [g1[0], g2[0]].sort().join("");
+            const bPair = [g1[1], g2[1]].sort().join("");
+            return `${mPair}${bPair}`;
+        }
+
+        function evaluatePlantPhenotype(genotype) {
+            const hasDominantM = genotype.includes("M");
+            const isHomozygousM = genotype.startsWith("MM");
+            const isRecessiveB = genotype.endsWith("bb");
+
+            // Aturan Epistasis Resesif (bb = Klorofil/Vitalitas lemah)
+            if (isRecessiveB) {
+                return {
+                    name: "Pucat / Albino (Rawan Layu)",
+                    badgeClass: "badge-red",
+                    care: "Anakan ini membawa sifat resesif ganda (bb) sehingga zat hijau daunnya (klorofil) sangat sedikit. Letakkan di tempat teduh (bawah atap/paranet 80%), jangan terkena matahari langsung, dan gunakan media tanam yang sangat poros agar akar tidak busuk."
+                };
+            }
+
+            // Kodominansi / Heterozigot (Mm = Corak Kombinasi / Variegata)
+            if (hasDominantM && !isHomozygousM) {
+                return {
+                    name: "Corak Kombinasi / Variegata",
+                    badgeClass: "badge-amber",
+                    care: "Anakan unggulan dengan perpaduan warna yang cantik! Agar corak warnanya keluar tegas dan tidak kembali menghijau, berikan sinar matahari pagi (pukul 07.00 - 09.00) dan gunakan pupuk rendah Nitrogen (misalnya NPK seimbang atau pupuk khusus bunga/warna)."
+                };
+            }
+
+            // Dominan Penuh (MM = Warna Pekat)
+            if (isHomozygousM) {
+                return {
+                    name: "Warna Merah/Ungu Pekat Unggulan",
+                    badgeClass: "badge-green",
+                    care: "Tanaman ini mewarisi gen warna pekat yang kuat dan vigor batang yang kokoh. Sangat bagus dijadikan indukan utama. Siram 2-3 hari sekali saat media mulai kering dan berikan pupuk lambat urai (Dekastar) setiap 3 bulan."
+                };
+            }
+
+            // Resesif murni dengan B normal (mmBB / mmBb)
+            return {
+                name: "Hijau / Putih Alami (Tahan Cuaca)",
+                badgeClass: "badge-blue",
+                care: "Anakan ini sangat sehat, berdaun rimbun, dan paling tahan terhadap perubahan cuaca. Cocok ditanam di teras rumah dan sangat mudah diperbanyak melalui cacah batang atau pemisahan anakan."
+            };
+        }
+
+        function populatePlantSelectors() {
+            const plantSelect = document.getElementById("plantType");
+            const p1Select = document.getElementById("parent1Gen");
+            const p2Select = document.getElementById("parent2Gen");
+
+            if (!plantSelect || !appDB.plants) return;
+
+            plantSelect.innerHTML = "";
+            Object.keys(appDB.plants).forEach((key) => {
+                const opt = document.createElement("option");
+                opt.value = key;
+                opt.textContent = appDB.plants[key]?.name ?? key;
+                plantSelect.appendChild(opt);
+            });
+
+            const updateParentOptions = () => {
+                const selectedPlantKey = plantSelect.value;
+                const plantData = appDB.plants[selectedPlantKey];
+                const genotypes = Array.isArray(plantData?.genotypes) ? plantData.genotypes : [];
+
+                p1Select.innerHTML = "";
+                p2Select.innerHTML = "";
+
+                genotypes.forEach((item, idx) => {
+                    const opt1 = document.createElement("option");
+                    opt1.value = item.code;
+                    opt1.textContent = item.label;
+                    p1Select.appendChild(opt1);
+
+                    const opt2 = document.createElement("option");
+                    opt2.value = item.code;
+                    opt2.textContent = item.label;
+                    if (idx === 1) opt2.selected = true;
+                    p2Select.appendChild(opt2);
+                });
+
+                renderPlantCross();
+            };
+
+            plantSelect.addEventListener("change", updateParentOptions);
+            updateParentOptions();
+        }
+
+        function renderPlantCross() {
+            const p1Code = document.getElementById("parent1Gen")?.value ?? "MmBb";
+            const p2Code = document.getElementById("parent2Gen")?.value ?? "MmBb";
+            const punnettContainer = document.getElementById("punnettContainer");
+            const summaryBox = document.getElementById("plantSummaryBox");
+            const careBox = document.getElementById("plantCareBox");
+
+            if (!punnettContainer || !summaryBox || !careBox) return;
+
+            const gametes1 = extractGametes(p1Code);
+            const gametes2 = extractGametes(p2Code);
+
+            punnettContainer.innerHTML = "";
+            const counts = {};
+
+            gametes1.forEach((g1) => {
+                gametes2.forEach((g2) => {
+                    const childGeno = combineGametes(g1, g2);
+                    const phenoInfo = evaluatePlantPhenotype(childGeno);
+
+                    counts[phenoInfo.name] = (counts[phenoInfo.name] || 0) + 1;
+
+                    const cell = document.createElement("div");
+                    cell.className = "punnett-cell";
+                    cell.innerHTML = `
+                        <span class="geno-code">${childGeno}</span>
+                        <span class="pheno-tag">${phenoInfo.name.split(" ")[0]}</span>
+                    `;
+
+                    cell.addEventListener("click", () => {
+                        document.querySelectorAll(".punnett-cell").forEach((c) => c.classList.remove("selected"));
+                        cell.classList.add("selected");
+                        careBox.innerHTML = `
+                            <strong>Sifat Anakan Terpilih (${childGeno} - ${phenoInfo.name}):</strong><br>
+                            ${phenoInfo.care}
+                        `;
+                    });
+
+                    punnettContainer.appendChild(cell);
+                });
+            });
+
+            // Tampilkan Ringkasan Persentase
+            let listHtml = `<ul class="stat-list">`;
+            Object.keys(counts).forEach((phenoName) => {
+                const pct = ((counts[phenoName] / 16) * 100).toFixed(1);
+                listHtml += `
+                    <li>
+                        <span>${phenoName}</span>
+                        <span class="badge badge-green">${pct}% (${counts[phenoName]} dari 16)</span>
+                    </li>
+                `;
+            });
+            listHtml += `</ul>`;
+            summaryBox.innerHTML = listHtml;
+
+            // Pilih otomatis kotak pertama untuk panduan awal
+            const firstCell = punnettContainer.querySelector(".punnett-cell");
+            if (firstCell) firstCell.click();
+        }
+
+        // 4. LOGIKA GOLONGAN DARAH & NUTRISI KELUARGA (MODUL 2)
+        function populateFamilySelectors() {
+            const fatherSel = document.getElementById("bloodFather");
+            const motherSel = document.getElementById("bloodMother");
+            const lactoseSel = document.getElementById("lactoseTrait");
+            const caffeineSel = document.getElementById("caffeineTrait");
+
+            appDB.bloodTypes.forEach((bt, idx) => {
+                const o1 = document.createElement("option");
+                o1.value = bt.id;
+                o1.textContent = bt.label;
+                fatherSel.appendChild(o1);
+
+                const o2 = document.createElement("option");
+                o2.value = bt.id;
+                o2.textContent = bt.label;
+                if (idx === 2) o2.selected = true;
+                motherSel.appendChild(o2);
+            });
+
+            appDB.lactoseOptions.forEach((item) => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.label;
+                lactoseSel.appendChild(opt);
+            });
+
+            appDB.caffeineOptions.forEach((item) => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.label;
+                caffeineSel.appendChild(opt);
+            });
+
+            renderFamilyAnalysis();
+        }
+
+        function mapAllelesToBloodGroup(a1, a2) {
+            const pair = [a1, a2].sort().join("");
+            if (pair === "IAIA" || pair === "IAi") return "Golongan Darah A";
+            if (pair === "IBIB" || pair === "IBi") return "Golongan Darah B";
+            if (pair === "IAIB") return "Golongan Darah AB";
+            return "Golongan Darah O";
+        }
+
+        function renderFamilyAnalysis() {
+            const fId = document.getElementById("bloodFather")?.value;
+            const mId = document.getElementById("bloodMother")?.value;
+            const lacId = document.getElementById("lactoseTrait")?.value;
+            const cafId = document.getElementById("caffeineTrait")?.value;
+            const outContainer = document.getElementById("familyResultContainer");
+
+            if (!outContainer) return;
+
+            const fatherObj = appDB.bloodTypes.find((b) => b.id === fId) ?? appDB.bloodTypes[0];
+            const motherObj = appDB.bloodTypes.find((b) => b.id === mId) ?? appDB.bloodTypes[0];
+            const lactoseObj = appDB.lactoseOptions.find((l) => l.id === lacId) ?? appDB.lactoseOptions[0];
+            const caffeineObj = appDB.caffeineOptions.find((c) => c.id === cafId) ?? appDB.caffeineOptions[0];
+
+            const outcomes = {};
+            fatherObj.alleles.forEach((fa) => {
+                motherObj.alleles.forEach((ma) => {
+                    const bg = mapAllelesToBloodGroup(fa, ma);
+                    outcomes[bg] = (outcomes[bg] || 0) + 25;
+                });
+            });
+
+            let bloodHtml = `<ul class="stat-list">`;
+            Object.keys(outcomes).forEach((bgName) => {
+                bloodHtml += `
+                    <li>
+                        <span>${bgName}</span>
+                        <span class="badge badge-blue">Peluang ${outcomes[bgName]}%</span>
+                    </li>
+                `;
+            });
+            bloodHtml += `</ul>`;
+
+            outContainer.innerHTML = `
+                <div>
+                    <strong>1. Kemungkinan Golongan Darah Anak / Cucu:</strong>
+                    ${bloodHtml}
+                </div>
+                <div class="info-box">
+                    <strong>2. Panduan Konsumsi Susu & Kalsium Harian:</strong><br>
+                    ${lactoseObj.advice}
+                </div>
+                <div class="info-box warning">
+                    <strong>3. Panduan Minum Kopi, Teh & Kesehatan Jantung:</strong><br>
+                    ${caffeineObj.advice}
+                </div>
+            `;
+        }
+
+        // 5. LOGIKA SELEKSI BIBIT IKAN & BURUNG HOBI (MODUL 3)
+        function populateBreedingSelectors() {
+            const kinshipSel = document.getElementById("kinshipRelation");
+            const traitSel = document.getElementById("heritabilityTrait");
+
+            appDB.kinshipList.forEach((k) => {
+                const opt = document.createElement("option");
+                opt.value = k.id;
+                opt.textContent = k.label;
+                kinshipSel.appendChild(opt);
+            });
+
+            appDB.heritabilityTraits.forEach((t) => {
+                const opt = document.createElement("option");
+                opt.value = t.id;
+                opt.textContent = t.label;
+                traitSel.appendChild(opt);
+            });
+
+            renderBreedingEvaluation();
+        }
+
+        function renderBreedingEvaluation() {
+            const kinId = document.getElementById("kinshipRelation")?.value;
+            const traitId = document.getElementById("heritabilityTrait")?.value;
+            const avgPop = parseFloat(document.getElementById("avgPopulation")?.value ?? "70");
+            const selPar = parseFloat(document.getElementById("selectedParents")?.value ?? "85");
+            const outContainer = document.getElementById("breedingResultContainer");
+
+            if (!outContainer) return;
+
+            const kinObj = appDB.kinshipList.find((k) => k.id === kinId) ?? appDB.kinshipList[0];
+            const traitObj = appDB.heritabilityTraits.find((t) => t.id === traitId) ?? appDB.heritabilityTraits[0];
+
+            const validPop = isNaN(avgPop) ? 70 : Math.min(Math.max(avgPop, 1), 100);
+            const validPar = isNaN(selPar) ? 85 : Math.min(Math.max(selPar, 1), 100);
+
+            // Rumus Seleksi Genetika (R = h2 * S) dikurangi penalti silang dalam (inbreeding)
+            const selectionDiff = validPar - validPop;
+            const geneticGain = traitObj.h2 * selectionDiff;
+            const inbreedingPenalty = kinObj.fValue * 20;
+            const predictedOffspringScore = Math.min(100, Math.max(10, validPop + geneticGain - inbreedingPenalty)).toFixed(1);
+
+            const fPercent = (kinObj.fValue * 100).toFixed(2);
+            let boxStyle = "info-box";
+            let recommendationText = "Pasangan indukan ini sangat ideal untuk dikawinkan. Anakan akan memiliki daya tahan tubuh yang kuat dan sifat unggul indukan dapat menurun secara optimal.";
+
+            if (kinObj.fValue >= 0.25) {
+                boxStyle = "info-box danger";
+                recommendationText = "Sebaiknya HINDARI mengawinkan pasangan ini secara berulang. Karena hubungan darahnya terlalu dekat, risiko anakan tumbuh kerdil, tulang bengkok, atau daya tetas telur menurun sangat tinggi. Silakan cari indukan silangan baru dari luar.";
+            } else if (kinObj.fValue >= 0.125) {
+                boxStyle = "info-box warning";
+                recommendationText = "Pasangan ini masih boleh dikawinkan untuk mengunci warna/bentuk tubuh (Line Breeding), namun wajib lakukan seleksi ketat dan jangan mengawinkan sesama anakannya lagi di generasi berikutnya.";
+            }
+
+            outContainer.innerHTML = `
+                <ul class="stat-list">
+                    <li>
+                        <span>Tingkat Kawin Sedarah (Risiko Inbreeding):</span>
+                        <span class="badge ${kinObj.fValue >= 0.125 ? 'badge-red' : 'badge-green'}">${fPercent}% (${kinObj.status})</span>
+                    </li>
+                    <li>
+                        <span>Tambahan Mutu Genetik Murni:</span>
+                        <span class="badge badge-blue">${geneticGain >= 0 ? '+' : ''}${geneticGain.toFixed(1)} Poin</span>
+                    </li>
+                    <li>
+                        <span>Perkiraan Skor Kualitas Anakan:</span>
+                        <span class="badge badge-amber">Skor ${predictedOffspringScore} dari 100</span>
+                    </li>
+                </ul>
+                <div class="${boxStyle}">
+                    <strong>Saran Praktis untuk Bapak:</strong><br>
+                    ${recommendationText}
+                </div>
+            `;
+        }
+
+        // 6. INISIALISASI EVENT LISTENER UTAMA
+        document.addEventListener("DOMContentLoaded", () => {
+            // Navigasi Tab
+            const tabButtons = document.querySelectorAll(".tab-btn");
+            const tabPanels = document.querySelectorAll(".tab-panel");
+
+            tabButtons.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const targetId = btn.getAttribute("data-target");
+                    tabButtons.forEach((b) => b.classList.remove("active"));
+                    tabPanels.forEach((p) => p.classList.remove("active"));
+
+                    btn.classList.add("active");
+                    const targetPanel = document.getElementById(targetId);
+                    if (targetPanel) targetPanel.classList.add("active");
+                });
+            });
+
+            // Muat semua modul
+            populatePlantSelectors();
+            populateFamilySelectors();
+            populateBreedingSelectors();
+
+            // Tombol Aksi
+            document.getElementById("btnCrossPlant")?.addEventListener("click", renderPlantCross);
+            document.getElementById("parent1Gen")?.addEventListener("change", renderPlantCross);
+            document.getElementById("parent2Gen")?.addEventListener("change", renderPlantCross);
+
+            document.getElementById("btnAnalyzeFamily")?.addEventListener("click", renderFamilyAnalysis);
+            document.getElementById("btnCalcBreeding")?.addEventListener("click", renderBreedingEvaluation);
+        });
+    </script>
+</body>
+</html>
